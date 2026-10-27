@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glow Up Point - Cosmetics & Accessories Store</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+  html { scroll-behavior: smooth; }
+  body { color:#333; }
+
+  :root {
+    --pink: #ff6f91;
+    --gold: #d4af37;
+    --light-pink: #ffe6ee;
+    --dark: #2b2b2b;
+    --green: #4caf50;
+  }
+
+  /* ---------- NAVBAR ---------- */
+  header {
+    position: fixed;
+    top:0; left:0; width:100%;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+  }
+  nav {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding: 15px 8%;
+  }
+  .logo {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--pink);
+  }
+  .logo span { color: var(--gold); }
+  .nav-links {
+    list-style:none;
+    display:flex;
+    gap:30px;
+    align-items:center;
+  }
+  .nav-links a {
+    text-decoration:none;
+    color:var(--dark);
+    font-weight:500;
+    transition: 0.3s;
+  }
+  .nav-links a:hover { color: var(--pink); }
+  .menu-toggle { display:none; font-size:26px; cursor:pointer; }
+
+  .nav-right {
+    display:flex;
+    align-items:center;
+    gap:20px;
+  }
+  .cart-icon {
+    position: relative;
+    cursor: pointer;
+    font-size: 22px;
+    color: var(--dark);
+  }
+  #cart-count {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background: var(--pink);
+    color: #fff;
+    font-size: 11px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    margin-top:70px;
+    min-height:90vh;
+    background: linear-gradient(135deg, var(--light-pink), #fff);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 50px 8%;
+    flex-wrap:wrap;
+  }
+  .hero-text { max-width:500px; }
+  .hero-text h1 {
+    font-size: 48px;
+    font-weight:800;
+    color: var(--dark);
+    margin-bottom:20px;
+  }
+  .hero-text h1 span { color: var(--pink); }
+  .hero-text p {
+    font-size:18px;
+    margin-bottom:25px;
+    color:#555;
+  }
+  .btn {
+    display:inline-block;
+    padding: 14px 32px;
+    background: var(--pink);
+    color:#fff;
+    text-decoration:none;
+    border-radius:30px;
+    font-weight:600;
+    transition:0.3s;
+    border:none;
+    cursor:pointer;
+    font-size:15px;
+  }
+  .btn:hover { background: var(--gold); }
+  .hero-img img {
+    max-width: 380px;
+    width:100%;
+    border-radius: 20px;
+  }
+
+  /* ---------- SECTION TITLE ---------- */
+  .section-title {
+    text-align:center;
+    margin: 70px 0 40px;
+    padding: 0 20px;
+  }
+  .section-title h2 {
+    font-size:36px;
+    font-weight:700;
+    color:var(--dark);
+  }
+  .section-title span { color:var(--pink); }
+  .section-title p {
+    color:#777;
+    margin-top:10px;
+  }
+
+  /* ---------- CATEGORIES ---------- */
+  .categories {
+    display:flex;
+    justify-content:center;
+    gap:25px;
+    flex-wrap:wrap;
+    padding: 0 8% 60px;
+  }
+  .category-box {
+    width:220px;
+    text-align:center;
+    padding:25px 15px;
+    border-radius:15px;
+    background:#fff;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    transition:0.3s;
+    cursor:pointer;
+    text-decoration:none;
+    color:var(--dark);
+  }
+  .category-box:hover { transform: translateY(-8px); }
+  .category-box i {
+    font-size:40px;
+    color: var(--pink);
+    margin-bottom:15px;
+  }
+  .category-box h3 { font-size:18px; }
+
+  /* ---------- PRODUCTS ---------- */
+  .products {
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap:30px;
+    padding: 0 8% 60px;
+  }
+  .product-card {
+    background:#fff;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
+    transition:0.3s;
+    display:flex;
+    flex-direction:column;
+  }
+  .product-card:hover { transform: translateY(-10px); }
+  .product-img-wrap {
+    width:100%;
+    height:280px;
+    background:#faf5f0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+  }
+  .product-card img {
+    max-width:100%;
+    max-height:100%;
+    object-fit:contain;
+  }
+  .product-info { padding:18px; text-align:center; flex:1; display:flex; flex-direction:column; }
+  .product-info h3 { font-size:17px; margin-bottom:5px; }
+  .product-info .desc {
+    font-size:13px;
+    color:#888;
+    margin-bottom:10px;
+    min-height:32px;
+  }
+  .product-info .old-price {
+    text-decoration:line-through;
+    color:#999;
+    font-size:14px;
+    margin-right:8px;
+  }
+  .product-info .new-price {
+    color: var(--pink);
+    font-weight:700;
+    font-size:18px;
+  }
+
+  /* Skincare section accent */
+  #skincare-section { background: #f3fbf4; padding-bottom: 60px; }
+  #skincare-section .section-title h2 span { color: var(--green); }
+
+  /* Purses section accent */
+  #purses-section { background: #fff8f0; padding-bottom: 60px; }
+  #purses-section .section-title h2 span { color: var(--gold); }
+
+  /* ---------- WHY US ---------- */
+  .why-us {
+    background: var(--light-pink);
+    padding: 60px 8%;
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    flex-wrap:wrap;
+    text-align:center;
+  }
+  .why-box { max-width:220px; }
+  .why-box i { font-size:36px; color:var(--pink); margin-bottom:15px; }
+  .why-box h4 { margin-bottom:8px; }
+  .why-box p { color:#666; font-size:14px; }
+
+  /* ---------- NEWSLETTER ---------- */
+  .newsletter {
+    text-align:center;
+    padding: 60px 8%;
+    background: linear-gradient(135deg, var(--pink), var(--gold));
+    color:#fff;
+  }
+  .newsletter h2 { font-size:30px; margin-bottom:15px; }
+  .newsletter form {
+    margin-top:20px;
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .newsletter input {
+    padding:14px 20px;
+    border-radius:30px;
+    border:none;
+    width:280px;
+    outline:none;
+  }
+  .newsletter button {
+    padding:14px 28px;
+    border:none;
+    border-radius:30px;
+    background: var(--dark);
+    color:#fff;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+  }
+  .newsletter button:hover { background:#000; }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    background: var(--dark);
+    color:#fff;
+    padding: 50px 8% 20px;
+  }
+  .footer-top {
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:30px;
+    margin-bottom:30px;
+  }
+  .footer-col h3 { margin-bottom:15px; color: var(--pink); }
+  .footer-col p, .footer-col a {
+    color:#ccc;
+    text-decoration:none;
+    display:block;
+    margin-bottom:10px;
+    font-size:14px;
+  }
+  .footer-col a:hover { color: var(--gold); }
+  .socials a {
+    display:inline-block;
+    margin-right:12px;
+    font-size:20px;
+    color:#fff;
+  }
+  .socials a:hover { color: var(--pink); }
+  .footer-bottom {
+    text-align:center;
+    border-top:1px solid #444;
+    padding-top:20px;
+    font-size:14px;
+    color:#aaa;
+  }
+
+  /* ---------- WHATSAPP FLOAT ---------- */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: #25D366;
+    color: #fff;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    z-index: 2000;
+    text-decoration: none;
+    animation: pulse 2s infinite;
+  }
+  .whatsapp-float:hover { background: #1ebe57; }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); }
+    70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+  }
+
+  /* ---------- CART PANEL ---------- */
+  .cart-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 2998;
+  }
+  .cart-overlay.active { display: block; }
+
+  .cart-panel {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 350px;
+    max-width: 90%;
+    height: 100%;
+    background: #fff;
+    box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+    z-index: 2999;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.4s ease;
+  }
+  .cart-panel.active { right: 0; }
+
+  .cart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #eee;
+  }
+  .cart-header h2 { color: var(--pink); font-size: 22px; }
+  .close-cart {
+    font-size: 28px;
+    cursor: pointer;
+    color: #777;
+  }
+  .close-cart:hover { color: var(--pink); }
+
+  .cart-items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px 20px;
+  }
+  .cart-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .cart-item img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    background: #faf5f0;
+    border-radius: 8px;
+  }
+  .cart-item-info { flex: 1; }
+  .cart-item-info h4 { font-size: 14px; margin-bottom: 4px; }
+  .cart-item-info p { font-size: 13px; color: var(--pink); font-weight: 600; }
+
+  .qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+  }
+  .qty-controls button {
+    background: var(--light-pink);
+    border: none;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--pink);
+  }
+  .remove-item {
+    color: #e53935;
+    cursor: pointer;
+    font-size: 13px;
+    margin-left: 10px;
+  }
+
+  .empty-cart-msg {
+    text-align: center;
+    color: #999;
+    margin-top: 50px;
+  }
+
+  .cart-footer {
+    padding: 20px;
+    border-top: 1px solid #eee;
+  }
+  .cart-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+
+  .checkout-btn {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #fff;
+    margin-bottom: 10px;
+    transition: 0.3s;
+  }
+  .main-checkout-btn { background: var(--pink); font-size: 16px; padding: 15px; }
+  .main-checkout-btn:hover { background: var(--gold); }
+  .whatsapp-btn { background: #25D366; }
+  .whatsapp-btn:hover { background: #1ebe57; }
+  .call-btn { background: #555; }
+  .call-btn:hover { background: #333; }
+  .sms-btn { background: #2196F3; }
+  .sms-btn:hover { background: #1976D2; }
+  .copy-btn { background: var(--dark); }
+  .copy-btn:hover { background: #000; }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 768px) {
+    .nav-links {
+      position:absolute;
+      top:70px; right:0;
+      background:#fff;
+      flex-direction:column;
+      width:200px;
+      padding:20px;
+      display:none;
+      box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    }
+    .nav-links.active { display:flex; }
+    .menu-toggle { display:block; }
+    .hero { text-align:center; justify-content:center; }
+    .hero-img { margin-top:30px; }
+    .whatsapp-float {
+      width: 50px;
+      height: 50px;
+      font-size: 25px;
+      bottom: 15px;
+      right: 15px;
+    }
+    .cart-panel { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header>
+  <nav>
+    <div class="logo">The Glow Up <span>Point</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#skincare-section">Skincare</a></li>
+      <li><a href="#purses-section">Purses</a></li>
+      <li><a href="#haircare-section">Haircare</a></li>
+      <li><a href="#makeup-section">Makeup</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="cart-icon" onclick="toggleCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cart-count">0</span>
+      </div>
+      <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+    </div>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-text">
+    <h1>Glow Up With <span>Beauty</span> & Confidence</h1>
+    <p>Premium skincare products and stylish purses — all in one place. Quality products at affordable prices, delivered straight to your doorstep.</p>
+    <a href class="btn" target="_blank">Explore Our Collection</a>
+  </div>
+  <div class="hero-img">
+    <img src="images/hero-banner.jpg" alt="Glow Up Point Hero">
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<div class="section-title">
+  <h2>Shop by <span>Category</span></h2>
+  <p>Find exactly what you're looking for</p>
+</div>
+<div class="categories">
+  <a href="#skincare-section" class="category-box">
+    <i class="fas fa-spa"></i>
+    <h3>Skincare</h3>
+  </a>
+  <a href="#purses-section" class="category-box">
+    <i class="fas fa-shopping-bag"></i>
+    <h3>Purses</h3>
+  </a>
+  <a href="#haircare-section" class="category-box">
+    <i class="fas fa-kiss-wink-heart"></i>
+    <h3>Haircare</h3>
+  </a>
+  <a href="#makeup-section" class="category-box">
+    <i class="fas fa-magic"></i>
+    <h3>Makeup</h3>
+  </a>
+</div>
+
+<!-- ================= SKINCARE SECTION ================= -->
+<section id="skincare-section">
+  <div class="section-title">
+    <h2>Our <span>Skincare</span> Range</h2>
+    <p>Natural Ingredients, Glowing Results</p>
+  </div>
+
+  <div class="products" id="skincareGrid">
+
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img src="images/disaar-aloe-facewash.jpg" alt="Disaar Aloe Vera Face Wash">
+      </div>
+      <div class="product-info">
+        <h3>Disaar Aloe Vera Face Wash</h3>
+        <div class="desc">99% Aloe Vera | Deep Cleaning | Oil Control | 120ml</div>
+        <div><span class="old-price">Rs. 1,199</span><span class="new-price">Rs. 599</span></div>
+        <a href="#" class="btn" style="margin-top:12px;">Add to Cart</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img src="images/dearshe-nose-strip.jpg" alt="Dear She Green Tea Nose Strip">
+      </div>
+      <div class="product-info">
+        <h3>Dear She Green Tea Nose Strips</h3>
+        <div class="desc">Collagen | Instantly Unclogs Pores | Draws Out Oil</div>
+        <div><span class="old-price">Rs. 1,399</span><span class="new-price">Rs. 800</span></div>
+        <a href="#" class="btn" style="margin-top:12px;">Add to Cart</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img src="images/bioaqua-pawpaw-scrub.jpg" alt="Bioaqua Pawpaw Exfoliating Scrub">
+      </div>
+      <div class="product-info">
+        <h3>Bioaqua Pawpaw Exfoliating Scrub</h3>
+        <div class="desc">Papaya + Vitamin C | 16% Amino Acid | Brightening</div>
+        <div><span class="old-price">Rs. 1,199</span><span class="new-price">Rs. 799</span></div>
+        <a href="#" class="btn" style="margin-top:12px;">Add to Cart</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img src="images/bioaqua-rice-lotion.jpg" alt="Bioaqua Rice Raw Pulp Lotion">
+      </div>
+      <div class="product-info">
+        <h3>Bioaqua Rice Raw Pulp Lotion</h3>
+        <div class="desc">Smooth & Tender | Shrinks Pores | 120ml</div>
+        <div><span class="old-price">Rs. 1,399</span><span class="new-price">Rs. 799</span></div>
+        <a href="#" class="btn" style="margin-top:12px;">Add to Cart</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img src="images/fayankou-vitaminc-cleanser.jpg" alt="Fayankou Vitamin C Cleanser">
+      </div>
+      <div class="product-info">
+        <h3>Fayankou Vitamin C Cleanser</h3>
+        <div class="desc">Whitening Brightens | Sensitive Skin Friendly | 100g</div>
+        <div><span class="old-price">Rs. 1,499</span><span class="new-price">Rs. 899</span></div>
+        <a href="#" class="btn" style="margin-top:12px;">Add to Cart</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img src="images/bioaqua-pawpaw-cleanser.jpg" alt="Bioaqua Pawpaw Cleanser">
+      </div>
+      <div class="product-info">
+        <h3>Bioaqua Pawpaw Cleanser</h3>
+        <div class="desc">Papaya + Vitamin C | Deep Cleaning | Rich Foam</div>
+        <div><span class="old-price">Rs. 999</span><span class="new-price">Rs. 699</span></div>
+        <a href="#" class="btn" style="margin-top:12px;">Add to Cart</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img src="images/disaar-aloe-scrubcream.jpg" alt="Disaar Aloe Vera Scrub Cream">
+      </div>
+      <div class="product-info">
+        <h3>Disaar Aloe Vera Scrub Cream</h3>
+        <div class="desc">99% Aloe Vera | Exfoliation & Anti-acne | 120ml</div>
+        <div><span class="old-price">Rs. 1,299</span><span class="new-price">Rs. 799</span></div>
+        <a href="#" class="btn" style="margin-top:12px;">Add to Cart</a>
+      </div>
+    </div>
+  
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img src="images/tilisi-cleansing-aloe.jpg" alt="Tilisi Aloe Foam Cleanser">
+      </div>
+      <div class="product-info">
+        <h3>Tilisi Aloe Foam Cleanser</h3>
+        <div class="desc">Gentle|Foaming|Cleanser</div>
+        <div><span class="old-price">Rs. 1,599</span><span class="new-price">Rs. 799</span></div>
+        <a href="#" class="btn" style="margin-top:12px;">Add to Cart</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- ================== END SKINCARE SECTION ================== -->
+
+<!-- ================= PURSES SECTION ================= -->
+<section id="purses-section">
+  <div class="section-title">
+    <h2>Our <span>Purses</span> Range</h2>
+    <p>Elegant Designs, Premium Quality</p>
+  </div>
+
+  <div class="products" id="pursesGrid">
+
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img src="images/purse-camel.jpg" alt="Camel Vintage Handbag">
+      </div>
+      <div class="product-info">
+        <h3>Camel Vintage Handbag</h3>
+        <div class="desc">Embossed Floral Design | Gold Hardware | PU Leather</div>
+        <div><span class="old-price">Rs. 7,999</span><span class="new-price">Rs. 3,999</span></div>
+        <a href="#" class="btn" style="margin-top:12px;">Add to Cart</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img src="images/purse-white.jpg" alt="White Marble Handbag">
+      </div>
+      <div class="product-info">
+        <h3>White Marble Handbag</h3>
+        <div class="desc">Beaded Trim | Gold Lock | Marble Texture</div>
+        <div><span class="old-price">Rs. 8,400</span><span class="new-price">Rs. 4,200</span></div>
+        <a href="#" class="btn" style="margin-top:12px;">Add to Cart</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img src="images/purse-brown.jpg" alt="Brown Marble Handbag">
+      </div>
+      <div class="product-info">
+        <h3>Brown Marble Handbag</h3>
+        <div class="desc">Elegant Texture | Gold Hardware | Top Handle</div>
+        <div><span class="old-price">Rs. 8,999</span><span class="new-price">Rs. 4,500</span></div>
+        <a href="#" class="btn" style="margin-top:12px;">Add to Cart</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img src="images/purse-black.jpg" alt="Black Marble Handbag">
+      </div>
+      <div class="product-info">
+        <h3>Black Marble Handbag</h3>
+        <div class="desc">Textured Finish | Gold Buckle | Classic Style</div>
+        <div><span class="old-price">Rs. 9,600</span><span class="new-price">Rs. 4,800</span></div>
+        <a href="#" class="btn" style="margin-top:12px;">Add to Cart</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img src="images/purse-pink.jpg" alt="Pink Marble Handbag">
+      </div>
+      <div class="product-info">
+        <h3>Pink Marble Handbag</h3>
+        <div class="desc">Beaded Trim | Gold Lock | Soft Pink Tone</div>
+        <div><span class="old-price">Rs. 9,999</span><span class="new-price">Rs. 4,999</span></div>
+        <a href="#" class="btn" style="margin-top:12px;">Add to Cart</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- ================== END PURSES SECTION ================== -->
+
+<!-- ================= HAIRCARE SECTION ================= -->
+<section id="haircare-section">
+  <div class="section-title">
+    <h2>Our <span>Haircare</span> Range</h2>
+    <p>Care That Your Hair Deserves</p>
+  </div>
+
+  <div class="products" id="haircareGrid">
+
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img src="images/aura-glow-brushes.jpg" alt="Aura Glow Brushes">
+      </div>
+      <div class="product-info">
+        <h3>AURA Glow Brushes</h3>
+        <div class="desc">Soft Bristles | Anti-Hair Fall | Scalp Massage</div>
+        <div><span class="old-price">Rs. 1,699</span><span class="new-price">Rs. 850</span></div>
+        <a href="#" class="btn" style="margin-top:12px;">Add to Cart</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- ================== END HAIRCARE SECTION ================== -->
+
+<!-- ================= MAKEUP SECTION ================= -->
+<section id="makeup-section">
+  <div class="section-title">
+    <h2>Our <span>Makeup</span> Range</h2>
+    <p>Flawless Finish, Every Time</p>
+  </div>
+
+  <div class="products" id="makeupGrid">
+
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img src="images/marble-blender-sponges.jpg" alt="Marble Blender Sponges">
+      </div>
+      <div class="product-info">
+        <h3>MARBLE BLENDER SPONGES 2 PCS</h3>
+        <div class="desc">100% Soft & Bouncy | Seamless Blending | Wet & Dry Use | 2 Pcs</div>
+        <div><span class="old-price">Rs. 999</span><span class="new-price">Rs. 499</span></div>
+        <a href="#" class="btn" style="margin-top:12px;">Add to Cart</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- ================== END MAKEUP SECTION ================== -->
+
+<!-- WHY US -->
+<section class="why-us">
+  <div class="why-box">
+    <i class="fas fa-truck"></i>
+    <h4>Fast Delivery</h4>
+    <p>All over Karachi delivery within 5-7 days</p>
+  </div>
+  <div class="why-box">
+    <i class="fas fa-leaf"></i>
+    <h4>100% Original</h4>
+    <p>Authentic and cruelty-free products</p>
+  </div>
+  <div class="why-box">
+    <i class="fas fa-undo"></i>
+    <h4>Easy Returns</h4>
+    <p>Hassle-free return & exchange policy</p>
+  </div>
+  <div class="why-box">
+    <i class="fas fa-headset"></i>
+    <h4>24/7 Support</h4>
+    <p>We're here to help anytime</p>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+  <h2>Subscribe & Get 10% Off</h2>
+  <p>Stay updated with our latest offers and products</p>
+  <form onsubmit="return false;">
+    <input type="email" placeholder="Enter your email" required>
+    <button type="submit">Subscribe</button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-top">
+    <div class="footer-col">
+      <h3>Glow Up Point</h3>
+      <p>Your one-stop shop for premium skincare and stylish purses.</p>
+      <div class="socials">
+        <a href="https://www.instagram.com/the_glowup_point_" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/@TheGlowupPoint" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://wa.me/923333747558" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://www.tiktok.com/@the.glowup.point" target="_blank"><i class="fab fa-tiktok"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h3>Quick Links</h3>
+      <a href="#home">Home</a>
+      <a href="#skincare-section">Skincare</a>
+      <a href="#purses-section">Purses</a>
+      <a href="#haircare-section">Haircare</a>
+      <a href="#makeup-section">Makeup</a>
+    </div>
+    <div class="footer-col">
+      <h3>Contact Us</h3>
+      <p><i class="fas fa-phone"></i> 0333-3747558</p>
+      <p><i class="fas fa-envelope"></i> info@theglowuppoint.com</p>
+      <p><i class="fas fa-map-marker-alt"></i> Karachi, Pakistan</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2026 Glow Up Point. All Rights Reserved.
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT BUTTON -->
+<a href="https://wa.me/923333747558" class="whatsapp-float" target="_blank">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- ================= CART PANEL ================= -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <h2>Your Cart</h2>
+    <span class="close-cart" onclick="toggleCart()">&times;</span>
+  </div>
+
+  <div class="cart-items" id="cartItemsContainer">
+    <!-- Items JS se yahan aayenge -->
+  </div>
+
+  <div class="cart-footer">
+    <div class="cart-total">
+      <span>Total:</span>
+      <span id="cartTotal">Rs. 0</span>
+    </div>
+
+    <button class="checkout-btn main-checkout-btn" onclick="goToCheckout()">
+      Proceed to Checkout
+    </button>
+    
+    <button class="checkout-btn email-btn" onclick="checkoutEmail()"><i class="fas fa-envelope"></i> Order via Email</button>
+    
+    <button class="checkout-btn whatsapp-btn" onclick="checkoutWhatsApp()">
+      <i class="fab fa-whatsapp"></i> Quick Order via WhatsApp
+    </button>
+
+    <button class="checkout-btn call-btn" onclick="checkoutCall()">
+      <i class="fas fa-phone"></i> Call to Order
+    </button>
+
+    <button class="checkout-btn sms-btn" onclick="checkoutSMS()">
+      <i class="fas fa-sms"></i> Order via SMS
+    </button>
+
+    <button class="checkout-btn copy-btn" onclick="copyOrder()">
+      <i class="fas fa-copy"></i> Copy Order Details
+    </button>
+  </div>
+</div>
+<!-- ================== END CART PANEL ================== -->
+
+<!-- ================= JAVASCRIPT ================= -->
+<script>
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('active');
+  }
+
+  function toggleCart() {
+    document.getElementById('cartPanel').classList.toggle('active');
+    document.getElementById('cartOverlay').classList.toggle('active');
+  }
+
+  function getCart() {
+    return JSON.parse(localStorage.getItem('cart')) || [];
+  }
+
+  function saveCart(cart) {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const buttons = document.querySelectorAll('.product-info .btn');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const card = this.closest('.product-info');
+        const name = card.querySelector('h3').textContent.trim();
+        const priceEl = card.querySelector('.new-price');
+        const price = priceEl ? priceEl.textContent.replace(/[^0-9]/g, '') : '0';
+        const img = this.closest('.product-card').querySelector('img').src;
+
+        let cart = getCart();
+        let existing = cart.find(item => item.name === name);
+
+        if (existing) {
+          existing.qty += 1;
+        } else {
+          cart.push({ name, price, img, qty: 1 });
+        }
+
+        saveCart(cart);
+        renderCart();
+
+        document.getElementById('cartPanel').classList.add('active');
+        document.getElementById('cartOverlay').classList.add('active');
+      });
+    });
+
+    renderCart();
+  });
+
+  function renderCart() {
+    const cart = getCart();
+    const container = document.getElementById('cartItemsContainer');
+    const totalEl = document.getElementById('cartTotal');
+    const countEl = document.getElementById('cart-count');
+
+    container.innerHTML = '';
+
+    if (cart.length === 0) {
+      container.innerHTML = '<p class="empty-cart-msg">Your cart is empty 🛒</p>';
+    } else {
+      cart.forEach((item, index) => {
+        const itemTotal = item.price * item.qty;
+        container.innerHTML += `
+          <div class="cart-item">
+            <img src="${item.img}" alt="${item.name}">
+            <div class="cart-item-info">
+              <h4>${item.name}</h4>
+              <p>Rs. ${itemTotal}</p>
+              <div class="qty-controls">
+                <button onclick="changeQty(${index}, -1)">-</button>
+                <span>${item.qty}</span>
+                <button onclick="changeQty(${index}, 1)">+</button>
+                <span class="remove-item" onclick="removeItem(${index})">Remove</span>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    totalEl.textContent = 'Rs. ' + total;
+
+    const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+    countEl.textContent = totalQty;
+  }
+
+  function changeQty(index, change) {
+    let cart = getCart();
+    cart[index].qty += change;
+
+    if (cart[index].qty <= 0) {
+      cart.splice(index, 1);
+    }
+
+    saveCart(cart);
+    renderCart();
+  }
+
+  function removeItem(index) {
+    let cart = getCart();
+    cart.splice(index, 1);
+    saveCart(cart);
+    renderCart();
+  }
+
+  function goToCheckout() {
+    const cart = getCart();
+    if (cart.length === 0) {
+      alert('Your cart is empty!');
+      return;
+    }
+    window.location.href = "checkout.html";
+  }
+
+  function generateOrderMessage() {
+    const cart = getCart();
+    if (cart.length === 0) {
+      alert('Your cart is empty!');
+      return null;
+    }
+
+    let message = "Hi! I want to order these items:\n\n";
+    let total = 0;
+
+    cart.forEach(item => {
+      const itemTotal = item.price * item.qty;
+      total += itemTotal;
+      message += `• ${item.name} x${item.qty} = Rs. ${itemTotal}\n`;
+    });
+
+    message += `\nTotal: Rs. ${total}`;
+    return message;
+  }
+
+  function checkoutWhatsApp() {
+    const message = generateOrderMessage();
+    if (!message) return;
+    const encodedMessage = encodeURIComponent(message);
+    window.open(`https://wa.me/923333747558?text=${encodedMessage}`, '_blank');
+  }
+
+  function checkoutCall() {
+    const cart = getCart();
+    if (cart.length === 0) {
+      alert('Your cart is empty!');
+      return;
+    }
+    window.location.href = "tel:+923333747558";
+  }
+
+  function checkoutSMS() {
+    const message = generateOrderMessage();
+    if (!message) return;
+    const encodedMessage = encodeURIComponent(message);
+    window.location.href = `sms:+923333747558?body=${encodedMessage}`;
+  }
+
+  function copyOrder() {
+    const message = generateOrderMessage();
+    if (!message) return;
+
+    navigator.clipboard.writeText(message).then(() => {
+      alert("Order Details Have Been Copied! ✅\nNow You Can Paste Anywhere You Want (Email, Instagram, Messenger etc.)");
+    }).catch(() => {
+      alert("It Cant be Copied, Please Copy Manually:\n\n" + message);
+    });
+  }
+</script>
+<script src="products-data.js"></script>
+<script src="cart.js"></script>
+<script>
+  function renderProductGrid(containerId, category) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const filtered = PRODUCTS.filter(p => p.category === category);
+    container.innerHTML = filtered.map(p => `
+      <div class="product-card">
+        <a href="product.html?id=${p.id}" class="product-link">
+          <div class="product-img-wrap">
+            <img src="${p.image}" alt="${p.name}" loading="lazy">
+          </div>
+          <div class="product-info">
+            <h3>${p.name}</h3>
+            <p class="desc">${p.shortDesc.split('|')[0]}</p>
+            <div class="price-row">
+              <span class="old-price">Rs.${p.oldPrice.toLocaleString()}</span>
+              <span class="new-price">Rs.${p.newPrice.toLocaleString()}</span>
+            </div>
+          </div>
+        </a>
+        <div class="card-action">
+          <button class="btn" onclick="addToCart(${p.id})">Add to Cart</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    renderProductGrid('skincareGrid', 'skincare');
+    renderProductGrid('pursesGrid', 'purses');
+    renderProductGrid('haircareGrid', 'haircare');
+    renderProductGrid('makeupGrid', 'makeup');
+    if (typeof renderCart === 'function') renderCart();
+  });
+</script>
+</body>
+</html>

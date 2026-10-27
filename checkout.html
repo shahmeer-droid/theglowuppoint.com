@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout - Glow Up Point</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+
+  :root {
+    --pink: #ff6f91;
+    --gold: #d4af37;
+    --light-pink: #ffe6ee;
+    --dark: #2b2b2b;
+  }
+
+  body { background: #fafafa; color: #333; }
+
+  .checkout-header {
+    background: #fff;
+    padding: 20px 8%;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .checkout-header .logo {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--pink);
+  }
+  .checkout-header .logo span { color: var(--gold); }
+  .back-link {
+    text-decoration: none;
+    color: #666;
+    font-size: 14px;
+  }
+  .back-link:hover { color: var(--pink); }
+
+  .checkout-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    min-height: 100vh;
+    flex-wrap: wrap;
+  }
+
+  .checkout-form-section {
+    flex: 1.3;
+    padding: 40px 50px;
+    min-width: 320px;
+  }
+
+  .checkout-summary-section {
+    flex: 1;
+    background: #f5f5f5;
+    padding: 40px 40px;
+    min-width: 300px;
+    border-left: 1px solid #eee;
+  }
+
+  .form-group { margin-bottom: 15px; }
+  .form-row { display: flex; gap: 12px; }
+  .form-row .form-group { flex: 1; }
+
+  label {
+    display: block;
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+
+  input[type="text"], input[type="tel"], input[type="email"], select {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: 0.3s;
+  }
+  input:focus, select:focus { border-color: var(--pink); }
+
+  .section-heading {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 25px 0 15px;
+    color: var(--dark);
+  }
+  .section-heading:first-child { margin-top: 0; }
+
+  .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: #555;
+  }
+  .checkbox-group input { width: auto; }
+
+  .option-box {
+    border: 2px solid var(--pink);
+    background: var(--light-pink);
+    border-radius: 10px;
+    padding: 15px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
+
+  .payment-note {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 15px;
+    line-height: 1.5;
+  }
+
+  .complete-order-btn {
+    width: 100%;
+    padding: 16px;
+    background: var(--pink);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: 0.3s;
+  }
+  .complete-order-btn:hover { background: var(--gold); }
+
+  .terms-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+    color: #777;
+    text-decoration: underline;
+  }
+
+  .summary-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px 0;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  .summary-item img {
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+  }
+  .summary-item-info { flex: 1; }
+  .summary-item-info h4 { font-size: 14px; margin-bottom: 4px; }
+  .summary-item-info .qty { font-size: 12px; color: #888; }
+  .summary-item-price { font-weight: 600; font-size: 14px; }
+
+  .summary-totals { margin-top: 20px; padding-top: 15px; }
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 15px;
+    color: #555;
+  }
+  .summary-row.total {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--dark);
+    border-top: 1px solid #ddd;
+    padding-top: 15px;
+    margin-top: 10px;
+  }
+
+  .empty-checkout { text-align: center; padding: 60px 20px; }
+  .empty-checkout a {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 30px;
+    background: var(--pink);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 25px;
+  }
+
+  @media (max-width: 768px) {
+    .checkout-container { flex-direction: column-reverse; }
+    .checkout-summary-section { border-left: none; border-bottom: 1px solid #eee; }
+    .checkout-form-section, .checkout-summary-section { padding: 30px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="checkout-header">
+  <div class="logo">The Glow Up <span>Point</span></div>
+  <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Store</a>
+</div>
+
+<div class="checkout-container" id="checkoutContainer">
+
+  <div class="checkout-form-section">
+
+    <h2 class="section-heading">Contact</h2>
+    <div class="form-group">
+      <input type="tel" id="customerPhone" placeholder="Phone Number *" required>
+    </div>
+
+    <h2 class="section-heading">Delivery</h2>
+
+    <div class="form-group">
+      <select id="country">
+        <option>Pakistan</option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <input type="text" id="firstName" placeholder="First name *" required>
+      </div>
+      <div class="form-group">
+        <input type="text" id="lastName" placeholder="Last name *" required>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input type="text" id="address" placeholder="Address *" required>
+    </div>
+
+    <div class="form-group">
+      <input type="text" id="apartment" placeholder="Apartment, suite, etc. (optional)">
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <input type="text" id="city" placeholder="City *" required>
+      </div>
+      <div class="form-group">
+        <input type="text" id="postalCode" placeholder="Postal code (optional)">
+      </div>
+    </div>
+
+    <div class="checkbox-group">
+      <input type="checkbox" id="saveInfo">
+      <label for="saveInfo" style="margin:0;">Save this information for next time</label>
+    </div>
+    <div class="checkbox-group">
+      <input type="checkbox" id="whatsappUpdates">
+      <label for="whatsappUpdates" style="margin:0;">Message me on WhatsApp with order updates</label>
+    </div>
+
+    <h2 class="section-heading">Shipping Method</h2>
+    <div class="option-box">
+      <span>Standard Delivery</span>
+      <span>Rs. 300</span>
+    </div>
+
+    <h2 class="section-heading">Payment</h2>
+    <p class="payment-note">Your payment method's billing address must match the shipping address.</p>
+    <div class="option-box">
+      <span><i class="fas fa-money-bill-wave"></i> Cash on Delivery (COD)</span>
+    </div>
+
+    <button class="complete-order-btn" onclick="completeOrderWhatsApp()" style="background:#25D366;">
+      <i class="fab fa-whatsapp"></i> Complete Order via WhatsApp
+    </button>
+    <button class="complete-order-btn" onclick="completeOrderEmail()" style="background:#EA4335; margin-top:12px;">
+      <i class="fas fa-envelope"></i> Complete Order via Email
+    </button>
+    <a href="#" class="terms-link">Terms and policies</a>
+
+  </div>
+
+  <div class="checkout-summary-section">
+    <div id="summaryItemsContainer"></div>
+
+    <div class="summary-totals">
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <span id="subtotalAmount">Rs. 0</span>
+      </div>
+      <div class="summary-row">
+        <span>Shipping</span>
+        <span>Rs. 300</span>
+      </div>
+      <div class="summary-row total">
+        <span>Total</span>
+        <span id="totalAmount">Rs. 0</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const SHIPPING_COST = 300;
+
+  function getCart() {
+    return JSON.parse(localStorage.getItem('cart')) || [];
+  }
+
+  function renderSummary() {
+    const cart = getCart();
+    const container = document.getElementById('summaryItemsContainer');
+    const subtotalEl = document.getElementById('subtotalAmount');
+    const totalEl = document.getElementById('totalAmount');
+
+    if (cart.length === 0) {
+      document.getElementById('checkoutContainer').innerHTML = `
+        <div class="empty-checkout" style="width:100%;">
+          <h2>Your cart is empty 🛒</h2>
+          <p>Add some products before checking out.</p>
+          <a href="index.html">Continue Shopping</a>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = '';
+    let subtotal = 0;
+
+    cart.forEach(item => {
+      const itemTotal = item.price * item.qty;
+      subtotal += itemTotal;
+      container.innerHTML += `
+        <div class="summary-item">
+          <img src="${item.img}" alt="${item.name}">
+          <div class="summary-item-info">
+            <h4>${item.name}</h4>
+            <div class="qty">Qty: ${item.qty}</div>
+          </div>
+          <div class="summary-item-price">Rs. ${itemTotal}</div>
+        </div>
+      `;
+    });
+
+    const total = subtotal + SHIPPING_COST;
+    subtotalEl.textContent = 'Rs. ' + subtotal;
+    totalEl.textContent = 'Rs. ' + total;
+  }
+
+  function validateAndGetDetails() {
+    const phone = document.getElementById('customerPhone').value.trim();
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const apartment = document.getElementById('apartment').value.trim();
+    const city = document.getElementById('city').value.trim();
+    const postalCode = document.getElementById('postalCode').value.trim();
+
+    if (!phone || !firstName || !lastName || !address || !city) {
+      alert('Please fill all required fields marked with *');
+      return null;
+    }
+
+    const cart = getCart();
+    if (cart.length === 0) {
+      alert('Your cart is empty!');
+      return null;
+    }
+
+    return { phone, firstName, lastName, address, apartment, city, postalCode, cart };
+  }
+
+  function buildOrderMessage(details) {
+    const { phone, firstName, lastName, address, apartment, city, postalCode, cart } = details;
+
+    let subtotal = 0;
+    let message = "🛍️ NEW ORDER - Glow Up Point\n\n";
+    message += "Order Items:\n";
+
+    cart.forEach(item => {
+      const itemTotal = item.price * item.qty;
+      subtotal += itemTotal;
+      message += `• ${item.name} x${item.qty} = Rs. ${itemTotal}\n`;
+    });
+
+    const total = subtotal + SHIPPING_COST;
+
+    message += `\nSubtotal: Rs. ${subtotal}`;
+    message += `\nShipping: Rs. ${SHIPPING_COST}`;
+    message += `\nTotal: Rs. ${total}`;
+
+    message += `\n\nCustomer Details:`;
+    message += `\nName: ${firstName} ${lastName}`;
+    message += `\nPhone: ${phone}`;
+    message += `\nAddress: ${address}${apartment ? ', ' + apartment : ''}`;
+    message += `\nCity: ${city}`;
+    if (postalCode) message += `\nPostal Code: ${postalCode}`;
+    message += `\n\nPayment Method: Cash on Delivery (COD)`;
+
+    return message;
+  }
+
+  function completeOrderWhatsApp() {
+    const details = validateAndGetDetails();
+    if (!details) return;
+
+    const message = buildOrderMessage(details);
+    const encodedMessage = encodeURIComponent(message);
+
+    localStorage.removeItem('cart');
+    window.open(`https://wa.me/923333747558?text=${encodedMessage}`, '_blank');
+
+    alert('Order placed successfully! ✅ Redirecting to WhatsApp...');
+    setTimeout(() => {
+      window.location.href = "index.html";
+    }, 1500);
+  }
+
+  function completeOrderEmail() {
+    const details = validateAndGetDetails();
+    if (!details) return;
+
+    const message = buildOrderMessage(details);
+    const subject = "New Order - Glow Up Point";
+    const body = encodeURIComponent(message);
+
+    const gmailLink = `https://mail.google.com/mail/?view=cm&fs=1&to=theglowuppoint@gmail.com&su=${encodeURIComponent(subject)}&body=${body}`;
+
+    localStorage.removeItem('cart');
+    window.open(gmailLink, '_blank');
+
+    alert('Order placed successfully! ✅ Redirecting to Gmail...');
+    setTimeout(() => {
+      window.location.href = "index.html";
+    }, 1500);
+  }
+
+  renderSummary();
+</script>
+
+</body>
+</html>

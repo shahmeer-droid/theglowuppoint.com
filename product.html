@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product - Glow Up Point</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header>
+  <nav>
+    <a href="index.html" class="logo">The Glow Up <span>Point</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html#home">Home</a></li>
+      <li><a href="index.html#skincare-section">Skincare</a></li>
+      <li><a href="index.html#purses-section">Purses</a></li>
+      <li><a href="index.html#haircare-section">Haircare</a></li>
+      <li><a href="index.html#makeup-section">Makeup</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="cart-icon" onclick="toggleCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cart-count">0</span>
+      </div>
+      <div class="menu-toggle" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+    </div>
+  </nav>
+</header>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">Home</a> / <span id="breadcrumbName">Product</span>
+</div>
+
+<!-- PRODUCT DETAIL CONTENT (JS se fill hoga) -->
+<div id="productContent"></div>
+
+<!-- YOU MAY ALSO LIKE -->
+<div class="related-section">
+  <h2>You May Also Like</h2>
+  <div class="products" id="relatedGrid"></div>
+</div>
+
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="footer-top">
+    <div class="footer-col">
+      <h3>Glow Up Point</h3>
+      <p>Your one-stop shop for premium skincare and stylish purses.</p>
+      <div class="socials">
+        <a href="https://www.instagram.com/the_glowup_point_" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/@TheGlowupPoint" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a href="https://wa.me/923333747558" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://www.tiktok.com/@the.glowup.point" target="_blank"><i class="fab fa-tiktok"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h3>Quick Links</h3>
+      <a href="index.html#home">Home</a>
+      <a href="index.html#skincare-section">Skincare</a>
+      <a href="index.html#purses-section">Purses</a>
+      <a href="index.html#haircare-section">Haircare</a>
+      <a href="index.html#makeup-section">Makeup</a>
+    </div>
+    <div class="footer-col">
+      <h3>Contact Us</h3>
+      <p><i class="fas fa-phone"></i> 0333-3747558</p>
+      <p><i class="fas fa-envelope"></i> info@glowuppoint.com</p>
+      <p><i class="fas fa-map-marker-alt"></i> Karachi, Pakistan</p>
+    </div>
+  </div>
+  <div class="footer-bottom">&copy; 2026 Glow Up Point. All Rights Reserved.</div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/923333747558" class="whatsapp-float" target="_blank">
+  <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- CART PANEL -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <h2>Your Cart</h2>
+    <span class="close-cart" onclick="toggleCart()">&times;</span>
+  </div>
+  <div class="cart-items" id="cartItemsContainer"></div>
+  <div class="cart-footer">
+    <div class="cart-total"><span>Total:</span><span id="cartTotal">Rs. 0</span></div>
+    <button class="checkout-btn email-btn" onclick="checkoutEmail()"><i class="fas fa-envelope"></i> Order via Email</button>
+    <button class="checkout-btn main-checkout-btn" onclick="goToCheckout()">Proceed to Checkout</button>
+    <button class="checkout-btn whatsapp-btn" onclick="checkoutWhatsApp()"><i class="fab fa-whatsapp"></i> Quick Order via WhatsApp</button>
+    <button class="checkout-btn call-btn" onclick="checkoutCall()"><i class="fas fa-phone"></i> Call to Order</button>
+    <button class="checkout-btn sms-btn" onclick="checkoutSMS()"><i class="fas fa-sms"></i> Order via SMS</button>
+    <button class="checkout-btn copy-btn" onclick="copyOrder()"><i class="fas fa-copy"></i> Copy Order Details</button>
+  </div>
+</div>
+
+<!-- SCRIPTS -->
+<script src="products-data.js"></script>
+<script src="cart.js"></script>
+<script>
+  // URL se product ID nikalein
+  function getProductIdFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    return parseInt(params.get('id'));
+  }
+
+  let currentProduct = null;
+  let selectedQty = 1;
+
+  function loadProduct() {
+    const productId = getProductIdFromURL();
+    currentProduct = PRODUCTS.find(p => p.id === productId);
+
+    const contentEl = document.getElementById('productContent');
+
+    if (!currentProduct) {
+      contentEl.innerHTML = `
+        <div class="not-found">
+          <h2>Product Not Found 😔</h2>
+          <p>This Product Is Not Availaible.</p>
+          <a href="index.html" class="btn" style="margin-top:20px; display:inline-block;">Back to Store</a>
+        </div>
+      `;
+      return;
+    }
+
+    document.title = currentProduct.name + " - Glow Up Point";
+    document.getElementById('breadcrumbName').textContent = currentProduct.name;
+
+    const features = currentProduct.shortDesc.split('|').map(f => f.trim());
+
+    // Gallery thumbnails (sirf tab dikhengi jab 2+ images hon)
+    const allImages = currentProduct.images || [currentProduct.image];
+    let galleryHTML = '';
+
+    if (allImages.length > 1) {
+      galleryHTML = '<div class="thumbnail-row">';
+      allImages.forEach((img, i) => {
+        galleryHTML += `<img src="${img}" class="thumbnail ${i === 0 ? 'active' : ''}" onclick="changeImage(this, '${img}')">`;
+      });
+      galleryHTML += '</div>';
+    }
+
+    contentEl.innerHTML = `
+      <div class="product-detail">
+        <div class="product-detail-img">
+          <img id="mainProductImage" src="${currentProduct.image}" alt="${currentProduct.name}">
+          ${galleryHTML}
+        </div>
+        <div class="product-detail-info">
+          <h1>${currentProduct.name}</h1>
+          <div class="price-block">
+            <span class="old-price">Rs. ${currentProduct.oldPrice.toLocaleString()}</span>
+            <span class="new-price">Rs. ${currentProduct.newPrice.toLocaleString()}</span>
+          </div>
+          <div class="sale-badge">Sale</div>
+
+          <div class="qty-selector">
+            <button onclick="changeDetailQty(-1)">-</button>
+            <span id="detailQty">1</span>
+            <button onclick="changeDetailQty(1)">+</button>
+          </div>
+
+          <button class="detail-add-btn" onclick="addCurrentToCart()">Add to Cart</button>
+          <button class="detail-buy-btn" onclick="buyItNow()">Buy it now</button>
+
+          <div class="product-description">
+            <h3>${currentProduct.name}</h3>
+            <p>Experience the best quality with ${currentProduct.name}. Carefully formulated to give you visible results with regular use.</p>
+            <ul>
+              ${features.map(f => `<li>${f}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+      </div>
+    `;
+
+    loadRelatedProducts();
+  }
+
+  function changeDetailQty(change) {
+    selectedQty = Math.max(1, selectedQty + change);
+    document.getElementById('detailQty').textContent = selectedQty;
+  }
+
+  function changeImage(thumb, src) {
+    document.getElementById('mainProductImage').src = src;
+    document.querySelectorAll('.thumbnail').forEach(t => t.classList.remove('active'));
+    thumb.classList.add('active');
+  }
+
+  function addCurrentToCart() {
+    if (!currentProduct) return;
+    addToCart(currentProduct.id, selectedQty);
+  }
+
+  function buyItNow() {
+    if (!currentProduct) return;
+    addToCart(currentProduct.id, selectedQty);
+    window.location.href = "checkout.html";
+  }
+
+  function loadRelatedProducts() {
+    const container = document.getElementById('relatedGrid');
+    let related = PRODUCTS.filter(p => p.category === currentProduct.category && p.id !== currentProduct.id);
+
+    // Agar same category mein kam products hain, to baaki products bhi shamil karein
+    if (related.length < 4) {
+      const others = PRODUCTS.filter(p => p.id !== currentProduct.id && !related.includes(p));
+      related = related.concat(others);
+    }
+
+    related = related.slice(0, 4);
+
+    container.innerHTML = related.map(p => `
+      <div class="product-card">
+        <a href="product.html?id=${p.id}" class="product-link">
+          <div class="product-img-wrap"><img src="${p.image}" alt="${p.name}"></div>
+          <div class="product-info">
+            <h3>${p.name}</h3>
+            <div class="desc">${p.shortDesc}</div>
+            <div class="price-row">
+              <span class="old-price">Rs. ${p.oldPrice.toLocaleString()}</span>
+              <span class="new-price">Rs. ${p.newPrice.toLocaleString()}</span>
+            </div>
+          </div>
+        </a>
+        <div class="card-action">
+          <button class="btn" onclick="addToCart(${p.id})">Add to Cart</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  document.addEventListener('DOMContentLoaded', loadProduct);
+</script>
+
+</body>
+</html>
